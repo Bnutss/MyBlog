@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Лист постов</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .center-text {
+            text-align: center;
+        }
+
+        .create-post-btn {
+            text-align: right;
+        }
+
+        .heart-red {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="mt-4 mb-3 center-text">Список постов</h1>
+            </div>
+            <div class="col create-post-btn mt-5">
+                <a href="{% url 'blog:create_post' %}" class="btn btn-primary">Новый пост</a>
+            </div>
+        </div>
+        <hr>
+
+        {% for post in posts %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <h2 class="card-title"><a href="{% url 'blog:post_detail' post_id=post.id %}">{{ post.title }}</a></h2>
+                <p class="card-text">{{ post.text }}</p>
+                <p class="card-text">Нравится: <span class="heart-red"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                    </svg></span> {{ post.likes }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

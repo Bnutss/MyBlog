@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Информация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .heart-red {
+            fill: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card mt-5">
+            <div class="card-body">
+                <h2 class="card-title">{{ post.title }}</h2>
+                <p class="card-text">{{ post.text }}</p>
+                <p class="card-text">
+                    <span id="likes">{{ post.likes }}</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill heart-red" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                    </svg>
+                </p>
+                <button class="btn btn-primary" onclick="likePost({{ post.id }})">
+                    Мне нравится
+                </button>
+                <a href="{% url 'blog:post_list' %}" class="btn btn-danger float-right">Назад</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function likePost(postId) {
+            fetch('/like/' + postId + '/')
+                .then(response => response.json())
+                .then(data => {
+                    const likesCount = document.getElementById('likes');
+                    likesCount.innerText = data.likes;
+                });
+        }
+    </script>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>
